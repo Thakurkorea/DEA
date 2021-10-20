@@ -1,0 +1,25 @@
+library(Benchmarking)
+library("xlsx")
+ 
+filepath<-"C:/Users/DK/Documents/KakaoTalk Downloads/R_data.csv"
+my_data<-read.csv(file=filepath,header = TRUE)
+
+# 인풋 / 아웃풋 자료 
+#x1 <- c(8,9,6,7,5,5,4,5,6,4,9,7,7)
+#x2 <- c(2900,1000,700,2000,1100,1200,800,1300,1700,500,1500,1000,1100)
+#y1 <- c(4000,7000,8000,6000,3000,5000,2000,3000,9000,8000,6000,6000,6000)
+#y2 <- c(50,30,40,60,50,40,70,40,100,60,70,70,70)
+#x <- cbind(x1,x2)
+# <- cbind(y1,y2)
+
+x<-with(my_data,cbind(  Sex,      Age_group, Job ,      income,    X4A ,      X4B ,      X4C,      
+                       X4D,       X4E ,      X5F ,      X6A  ,    X6B ,      X7A ,      X7B,
+                       X7C, X7D ,      X8A  ,     X8B ,      X8C ,      X9A ,      X9B , X9C))
+y<-with(my_data,cbind(X6A_1, X6B_1, X7B_1, X7D_1, X8B_1, X8C_1, X9B_1, X9C_1))
+# DEA 분석
+result <- dea(x,y,RTS="crs",ORIENTATION = "in")
+print(result)
+eff(result)
+summary(result)
+dea.plot(x,y,RTS='crs',ORIENTATION = "in-out",xlab="Input",ylab='Output')
+write.csv(result[["eff"]],"C:/Users/DK/Documents/KakaoTalk Downloads/xcore_vrs.csv")
